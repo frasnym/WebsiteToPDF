@@ -3,7 +3,7 @@ import React from 'react';
 type Props = {
 	label?: string;
 	symbol: string;
-	className: string;
+	className?: string;
 };
 
 export default function Emoji({ label = '', symbol, className }: Props) {
