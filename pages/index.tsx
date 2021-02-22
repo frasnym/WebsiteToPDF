@@ -25,13 +25,13 @@ export default function IndexPage() {
 
 		axios
 			.post('/api/converter', body)
-			.then(function (response) {
-				if (response.status === 200) {
-					alert(response.data.name);
-				} else {
-					alert(response.data.message);
-				}
-				console.log(response);
+			.then(function (_response) {
+				// if (response.status === 200) {
+				// 	alert(response.data.name);
+				// } else {
+				// 	alert(response.data.message);
+				// }
+				// console.log(response);
 				setLoading(false);
 			})
 			.catch(function (error) {
