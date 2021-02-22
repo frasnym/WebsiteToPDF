@@ -3,8 +3,27 @@ import chromium from 'chrome-aws-lambda';
 
 import { addhttp, isValidURL } from '../../helpers/utils';
 
+/**
+ * Convert site URL to downloadable PDF Document
+ * @param req NextApiRequest
+ * @param res NextApiResponse
+ * ============= POST
+ * @param url string
+ * @param scale number
+ * @param marginTop number
+ * @param marginBottom number
+ * @param marginLeft number
+ * @param marginRight number
+ */
 const converter: NextApiHandler = async (req, res) => {
-	const reqBody: { url: string } = req.body;
+	const reqBody: {
+		url: string;
+		scale: number;
+		marginTop: number;
+		marginBottom: number;
+		marginLeft: number;
+		marginRight: number;
+	} = req.body;
 
 	if (!isValidURL(reqBody.url)) {
 		return res.status(400).json({ message: 'Invalid URL' });
@@ -33,14 +52,13 @@ const converter: NextApiHandler = async (req, res) => {
 		});
 
 		const pdf = await page.pdf({
-			// scale: 0.5,
-			// path: 'webtopdf/web.pdf',
+			scale: parseFloat(reqBody.scale.toString()),
 			format: 'letter',
 			margin: {
-				top: '20px',
-				bottom: '40px',
-				left: '20px',
-				right: '20px',
+				top: `${reqBody.marginTop}px`,
+				bottom: `${reqBody.marginBottom}px`,
+				left: `${reqBody.marginLeft}px`,
+				right: `${reqBody.marginRight}px`,
 			},
 		});
 
