@@ -1,5 +1,4 @@
 import { NextApiHandler } from 'next';
-// import puppeteer from 'puppeteer';
 import chromium from 'chrome-aws-lambda';
 
 import { addhttp, isValidURL } from '../../helpers/utils';
@@ -12,7 +11,7 @@ const converter: NextApiHandler = async (req, res) => {
 	}
 
 	try {
-		// const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
+		// puppeteer chromium does'nt supported on vercel
 		const browser = await chromium.puppeteer.launch({
 			args: [
 				...chromium.args,
@@ -24,9 +23,6 @@ const converter: NextApiHandler = async (req, res) => {
 			headless: true,
 			ignoreHTTPSErrors: true,
 		});
-		// const browser = await puppeteer.launch({
-		// 	headless: true,
-		// });
 
 		const url = addhttp(reqBody.url);
 
