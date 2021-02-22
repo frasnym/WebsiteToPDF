@@ -16,6 +16,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
 				name="viewport"
 				content="initial-scale=1.0, width=device-width"
 			/>
+			<link rel="shortcut icon" href="/favicon.ico" />
 		</Head>
 		<Header />
 		<div className="w-full flex content-center items-center">
