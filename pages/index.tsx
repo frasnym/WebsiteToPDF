@@ -1,26 +1,47 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+
+import ConverterForm from '../components/converter-form/ConverterForm';
 import Layout from '../components/layout/Layout';
-import Button from '../components/ui/button/Button';
 import Emoji from '../components/ui/emoji/Emoji';
-import Error from '../components/ui/error/Error';
 import { ErrorProps } from '../models/error.model';
 
 export default function IndexPage() {
-	const urlInputRef = useRef<HTMLInputElement>(null);
+	// * React useState Hooks
 	const [error, setError] = useState<ErrorProps>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 
+	/**
+	 * Function to reset error state
+	 */
 	const closeErrorHandler: () => void = () => {
 		setError(null);
 	};
 
-	const submitHandler = (event: React.FormEvent) => {
+	/**
+	 * Function to submit provided setting then send it to API
+	 * @param event React.FormEvent
+	 */
+	const submitHandler = (
+		event: React.FormEvent,
+		url: string,
+		scale: number,
+		marginTop: number,
+		marginBottom: number,
+		marginLeft: number,
+		marginRight: number
+	) => {
+		closeErrorHandler();
 		setLoading(true);
 		event.preventDefault();
 
 		const body = {
-			url: urlInputRef.current.value,
+			url,
+			scale,
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight,
 		};
 
 		axios
@@ -51,7 +72,7 @@ export default function IndexPage() {
 	};
 
 	return (
-		<Layout title="Home">
+		<Layout title="WebToPdf">
 			<p className="text-2xl font-bold mb-2">
 				Hi <Emoji symbol="👋" />, you want to convert a web page to PDF
 				right?{' '}
@@ -62,25 +83,11 @@ export default function IndexPage() {
 			<p className="text-xl font-bold text-gray-500 mb-5">
 				In here you can convert it with minimal configuration!
 			</p>
-			<form onSubmit={submitHandler}>
-				{error ? <Error {...error} /> : null}
-				<input
-					type="text"
-					className="w-full text-xl rounded-md border-2 border-solid outline-none bg-gray-200 border-gray-300 text-black focus:bg-gray-50 focus:border-gray-200 p-3"
-					placeholder="🔎 Paste your prefered URL"
-					ref={urlInputRef}
-					disabled={loading}
-				/>
-				{/* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; */}
-				<div className="block w-full mt-3 text-right">
-					<Button
-						btnType="primary"
-						text="Convert now!"
-						type="submit"
-						loading={loading}
-					/>
-				</div>
-			</form>
+			<ConverterForm
+				error={error}
+				loading={loading}
+				submitHandler={submitHandler}
+			/>
 		</Layout>
 	);
 }
