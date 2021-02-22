@@ -24,6 +24,10 @@ export default function Button({
 			btnColorClass = 'text-white bg-purple-600 border-purple-600';
 			break;
 
+		case 'secondary':
+			btnColorClass = 'text-white bg-blue-600 border-blue-600';
+			break;
+
 		default:
 			break;
 	}
