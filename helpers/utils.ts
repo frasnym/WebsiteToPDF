@@ -12,9 +12,8 @@ export function isValidURL(str: string): Boolean {
 }
 
 export function addhttp(s: string) {
-	const prefix = 'http://';
-	if (s.substr(0, prefix.length) !== prefix) {
-		s = prefix + s;
+	if (!s.match(/^[a-zA-Z]+:\/\//)) {
+		s = 'http://' + s;
 	}
 	return s;
 }
