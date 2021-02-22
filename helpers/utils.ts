@@ -10,3 +10,11 @@ export function isValidURL(str: string): Boolean {
 	); // fragment locator
 	return !!pattern.test(str);
 }
+
+export function addhttp(s: string) {
+	const prefix = 'http://';
+	if (s.substr(0, prefix.length) !== prefix) {
+		s = prefix + s;
+	}
+	return s;
+}
